@@ -1,0 +1,28 @@
+version: "3.9"
+
+services:
+  web:
+    build: ./api
+    ports:
+      - 3000:3000
+    depends_on:
+      - pg
+    volumes:
+      - ./api/src:/usr/app/src
+    enviroment:
+      - PG_CONNECTION_STRING=postgres://${POSTGRES_USER}
+
+  pg:
+    image: postgres:latest
+    ports:
+      - 5432:5432
+    enviroment:
+      - POSTGRES_DB
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
+      - PGDATA=/var/lin/postg
+    volumes:
+      - ./_volumes/pgdata:/va
+
+  reddis:
+    image: reddis
